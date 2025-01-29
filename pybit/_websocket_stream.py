@@ -1,6 +1,7 @@
 import websocket
 import threading
 import time
+import ssl
 import json
 from ._http_manager import generate_signature
 import logging
@@ -161,6 +162,7 @@ class _WebSocketManager:
             # Setup the thread running WebSocketApp.
             self.wst = threading.Thread(
                 target=lambda: self.ws.run_forever(
+                    sslopt={'cert_reqs': ssl.CERT_NONE},
                     ping_interval=self.ping_interval,
                     ping_timeout=self.ping_timeout,
                 )
